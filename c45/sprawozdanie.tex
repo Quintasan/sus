@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage[]{algorithm2e}
+\usepackage{fullpage}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[parfill]{parskip}
+\title{Systemy Uczące Się \\ Indukcja Drzew Decyzyjnych C4.5}
+\author{Michał Zając \\ 203229}
+\graphicspath{ {images/} }
+\date{30 listopada 2016}
+\begin{document}
+\maketitle
+\clearpage
+\section{Wstęp}
+Ćwiczenie obejmowało analizę metody generowania drzewa decyzyjnego za pomocą algorytmu C4.5 przy użyciu narzędzia WEKA.
+
+\section{Generowanie drzewa decyzyjnego metodą C4.5}
+Algorytm C4.5 jest algorymem typu dziel i zwyciężaj. Pozwala on na statystyczną analizę zbioru danych. Wynikiem algorytmu jest drzewo decyzyjne pozwalające na klasyfikację nowego przykładu do jednej z klas zdefiniowanych w ramach zbioru bazując na poprzednio przetworzonych danych.
+
+Proces decyzyjny polega na przetworzeniu drzewa od góry (korzenia), używając informacji przechowywanych w każdym elemencie drzewa schodzimy coraz niżej aż w końcu natrafimy na liść który zawiera decyzję do której klasy należy przydzielić badany przykład.
+
+Algorytm ma trzy podstawowe scenariusze:
+
+\begin{itemize}
+  \item Jeżeli wszystkie przykłady z danego zbioru należą do tej samej klasy to tworzony jest liść drzewa mówiący aby wybrać tą klasę.
+  \item Jeżeli żadna z cech nie wnosi żadnych nowych informacji to tworzony jest węzeł decyzyjny wyżej w drzewie za pomocą oczekiwanej wartości klasy.
+  \item Jeżeli zostanie napotkana nowa klasa to dodajemy węzeł decyzyjny wyżej w drzewie za pomocą wartości oczekiwanej.
+\end{itemize}
+
+Pierwszym badanym parametrem jest wskaźnik pewności. Po zakończeniu działania algorytmu dochodzi dodatkowo do obcięcia (ang. \textit{pruning}) gałęzi których wskaźnik pewności (ang. \textit{confidence factor}) nie przekracza zadanego progu. Wskaźnik pewności działa przy założeniu że decyzje podjęte w ramach pewnego drzewa są zbytnio dopasowane do danych na podstawie których zbudowano to drzewo.
+Drugim parametrem którego wpływ na algorytm będzie badany jest minNumInstances który decyduje o tym minimalnej ilości obiektów musi znajdować się w liściu aby dana decyzja mogła zostać podjęta.
+
+\section Zysk informacyjny
+W celu wybrania odpowiedniego atrybutu początkowego należy obliczyć tzw. zysk informacyjny. Zysk informacyjny zbioru S liczymy ze wzoru:
+
+$
+Gain(S,A) = Entropy(S) - \sigma{}{v in Values(A)}\frac{|S_{v}|{S}Entropy(S_{v})
+$
+
+\section{Wybrane zbiory danych}
+Do ćwiczenia użyto następujących zbiorów danych:
+\begin{description}
+\item[Iris] -  zbiór danych o irysach. Występują w nim trzy możliwe klasyfikacje, w zależności od gatunku kwiatu. Liczba cech: 4. Liczebność zbioru: 150
+\item[Glass] - zbiór danych o rozpoznawaniu rodzaju szkła na podstawie jego właściwości i wyliczonych cech. Występuje w nim siedem możliwych klasyfikacji. Liczba cech: 9. Liczebność zbioru: 214
+\item[Pima Indians Diabetes] - zbiór zawierający dane o osobach z USA, którzy chorują na cukrzycę. Występują w nim dwie możliwe klasyfikacje: osoba chora i osoba zdrowa. Liczba cech: 8. Liczebność zbioru: 768
+\item[Ionosphere] - zbiór danych zawiera dane dotyczące jonosfery zebrane z 16 anten. Dwie klasy, liczba cech: 34, liczebność zbioru: 351.
+\end{description}
+
+\section{Implementacja}
+Do wykonania badań użyto skryptu wywołującego program WEKA z odpowiednimi parametrami i zwracający wyniki w formie odzielonej przecinkami.
+
+\section{Wyniki}
+
+\begin{thebibliography}{1} 
+\bibitem{zbiory} Lichman, M. (2013). \href{http://archive.ics.uci.edu/ml}{UCI Machine Learning Repository}. Irvine, CA: University of California, School of Information and Computer Science.
+\bibitem{parkinsons} \emph{Exploiting Nonlinear Recurrence and Fractal Scaling Properties for Voice Disorder Detection}, Little MA, McSharry PE, Roberts SJ, Costello DAE, Moroz IM. BioMedical Engineering OnLine 2007, 6:23 (26 June 2007)
+\bibitem{discret} \href{http://robotics.stanford.edu/users/sahami/papers-dir/disc.pdf}{Supervised and Unsupervised Discretization of Continous Features} - Dougherty, J., Kohavi, R., Sahami, M., Computer Science University, Stanford University 
+\bibitem{ila} \href{http://www.dis.uniroma1.it/~sassano/STAGE/LearningRule.pdf}{An Inductive Learning Algorithm for Production Rule Discovery} - Tolun, M.R., Abu-Soud, S.M. 1999
+\bibitem{wykladKw} Indukcja reguł, podejście sekwencyjnego pokrywania, algorytm AQ - Systemy Uczące Się. Slajdy do wykładu prof. dr hab. inż. Haliny Kwaśnickiej, Politechnika Wrocławska.
+\end{thebibliography}
+\end{document}
