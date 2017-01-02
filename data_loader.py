@@ -1,5 +1,5 @@
-import arff
 import random
+import arff
 
 class DataLoader:
     @staticmethod
